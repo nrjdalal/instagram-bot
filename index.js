@@ -13,6 +13,7 @@ const index = async () => {
   const browser = await puppeteer.launch({
     headless: false,
   })
+
   const context = await browser.createIncognitoBrowserContext()
   const page = await context.newPage()
 
@@ -73,8 +74,9 @@ const index = async () => {
 
     console.log(usernames.length + '\n')
 
+    const list = []
     for (i = 0; i < usernames.length; i++) {
-      await page.waitForTimeout(1000)
+      await page.waitForTimeout(5000)
       await page.goto(`https://www.instagram.com/${usernames[i]}/`)
       await page.waitForXPath(
         '/html/body/div[1]/section/main/div/header/section/div[1]/h2',
@@ -132,7 +134,8 @@ const index = async () => {
         Following: getFollowing,
       }
 
-      console.log(profile)
+      list.push(profile)
+      console.log(list)
     }
 
     // for dev purposes
