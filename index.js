@@ -34,10 +34,10 @@ const index = async () => {
     )
     await button[0].click({ delay: 100 })
 
-    // saying no to saving login info
-    await page.waitForXPath('/html/body/div[1]/section/main/div/div/div/button')
-    button = await page.$x(`/html/body/div[1]/section/main/div/div/div/button`)
-    await button[0].click({ delay: 100 })
+    // // saying no to saving login info
+    // await page.waitForXPath('/html/body/div[1]/section/main/div/div/div/button')
+    // button = await page.$x(`/html/body/div[1]/section/main/div/div/div/button`)
+    // await button[0].click({ delay: 100 })
 
     // visiting profile and getting followers
     await page.goto(`https://www.instagram.com/${user.evaluate}/`)
@@ -72,71 +72,72 @@ const index = async () => {
       (links) => links.map((link) => link.textContent)
     )
 
+    console.log(usernames + '\n')
     console.log(usernames.length + '\n')
 
-    const list = []
-    for (i = 0; i < usernames.length; i++) {
-      await page.waitForTimeout(5000)
-      await page.goto(`https://www.instagram.com/${usernames[i]}/`)
-      await page.waitForXPath(
-        '/html/body/div[1]/section/main/div/header/section/div[1]/h2',
-        { visible: true }
-      )
+    // const list = []
+    // for (i = 0; i < usernames.length; i++) {
+    //   await page.waitForTimeout(5000)
+    //   await page.goto(`https://www.instagram.com/${usernames[i]}/`)
+    //   await page.waitForXPath(
+    //     '/html/body/div[1]/section/main/div/header/section/div[1]/h2',
+    //     { visible: true }
+    //   )
 
-      const getUsername = await page.$eval('h2._7UhW9', (el) => el.textContent)
+    //   const getUsername = await page.$eval('h2._7UhW9', (el) => el.textContent)
 
-      let getDescription
-      try {
-        getDescription = await page.$eval(
-          '.-vDIg > span:nth-child(3)',
-          (el) => el.textContent
-        )
-      } catch {
-        getDescription = ''
-      }
+    //   let getDescription
+    //   try {
+    //     getDescription = await page.$eval(
+    //       '.-vDIg > span:nth-child(3)',
+    //       (el) => el.textContent
+    //     )
+    //   } catch {
+    //     getDescription = ''
+    //   }
 
-      const getPosts = await page.$eval(
-        'span._81NM2 > span:nth-child(1)',
-        (el) => el.textContent
-      )
+    //   const getPosts = await page.$eval(
+    //     'span._81NM2 > span:nth-child(1)',
+    //     (el) => el.textContent
+    //   )
 
-      let getFollowers
-      try {
-        getFollowers = await page.$eval(
-          'li.LH36I:nth-child(2) > a:nth-child(1) > span:nth-child(1)',
-          (el) => el.textContent
-        )
-      } catch {
-        getFollowers = await page.$eval(
-          'li.LH36I:nth-child(2) > span:nth-child(1) > span:nth-child(1)',
-          (el) => el.textContent
-        )
-      }
+    //   let getFollowers
+    //   try {
+    //     getFollowers = await page.$eval(
+    //       'li.LH36I:nth-child(2) > a:nth-child(1) > span:nth-child(1)',
+    //       (el) => el.textContent
+    //     )
+    //   } catch {
+    //     getFollowers = await page.$eval(
+    //       'li.LH36I:nth-child(2) > span:nth-child(1) > span:nth-child(1)',
+    //       (el) => el.textContent
+    //     )
+    //   }
 
-      let getFollowing
-      try {
-        getFollowing = await page.$eval(
-          'li.LH36I:nth-child(3) > a:nth-child(1) > span:nth-child(1)',
-          (el) => el.textContent
-        )
-      } catch {
-        getFollowing = await page.$eval(
-          'li.LH36I:nth-child(3) > span:nth-child(1) > span:nth-child(1)',
-          (el) => el.textContent
-        )
-      }
+    //   let getFollowing
+    //   try {
+    //     getFollowing = await page.$eval(
+    //       'li.LH36I:nth-child(3) > a:nth-child(1) > span:nth-child(1)',
+    //       (el) => el.textContent
+    //     )
+    //   } catch {
+    //     getFollowing = await page.$eval(
+    //       'li.LH36I:nth-child(3) > span:nth-child(1) > span:nth-child(1)',
+    //       (el) => el.textContent
+    //     )
+    //   }
 
-      const profile = {
-        Username: getUsername,
-        Description: getDescription,
-        Posts: getPosts,
-        Followers: getFollowers,
-        Following: getFollowing,
-      }
+    //   const profile = {
+    //     Username: getUsername,
+    //     Description: getDescription,
+    //     Posts: getPosts,
+    //     Followers: getFollowers,
+    //     Following: getFollowing,
+    //   }
 
-      list.push(profile)
-      console.log(list)
-    }
+    //   list.push(profile)
+    //   console.log(list)
+    // }
 
     // for dev purposes
     await page.waitForTimeout(7000)
